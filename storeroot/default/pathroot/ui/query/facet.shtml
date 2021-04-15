@@ -1,0 +1,15 @@
+<div class="row form-horizontal" jid="if"
+	 test="@{qr.hasFacet(facetfield)}">
+	<div class="form-group">
+		<label class="col-md-1   control-label">@html{qr.mapLable(facetfield)}</label>
+
+		<div class="col-md-11">
+			<ul class="list-inline">
+				<li jid="for" data="@{_qr.qr.getFacet(facetfield)}" var="f" fk-remove="@{f.selected?'class=active'}"><a
+						href="@{f.link}">@{f.label}<span class="badge">@{f.count}</span>
+				</a></li>
+			</ul>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,141 @@
+ <div jid="import" page="/admin/xfunctions/menu" ></div> 
+<div jid="setvar" name="x" value="@{rc.site.getXEnum(rc.param('id','/'))}"/>
+
+<h1> @{x.id}的子项</h1>
+<a class="pull-right  btn btn-primary" href="@{rc.path}?id=@{x.parentId}">上一级</a>
+<a class="  btn btn-default" href="@{rc.ctxroot()}@{rc.path}?id=@{x.id}&exportzip=true">下载</a>
+<div jid="for" data="@{x.getChildTypes()}" var="xt">
+	<div jid="setvar" name="xtfm" value="@{rc.site.xeTypes.get(xt).formModel}"/>
+
+	<table class="table table-bordered table-hover" edit-form="@{xtfm.xTypeName}">
+		<caption>
+			<h3> @{xtfm.screenName}</h3>
+		</caption>
+		<tr>
+		<th>Index</th>	
+          <th>ICON</th>
+			<th jid="for" data="@{xtfm.fieldsSorted}" var="fld">
+				@{fld.screenName}
+			</th>
+			<th>link
+			</th>
+		</tr>
+
+
+		<tr jid="for" data="@{rc.sort(x.getChildren(xt))}" var="xc" edit-id="@{xc.id}">
+          <td>@{rc.varInc('cidx')}</td>	
+          <td><span class="@{xc.icon} fa-2x"> </span></td>
+			<td jid="setvar" name="atts" value="@{xc.normalAttributes(rc.site)}"></td>
+			<td jid="for" data="@{xtfm.fieldsSorted}" var="fld" edit-field="@{fld.name}">
+      <span data-toggle="tooltip" title="@html{fld.mapValue( atts.get(fld.name ),rc)}">
+        @html.max(20){fld.mapValue(atts ,rc) }
+
+
+                </span>
+			</td>
+			<td>
+				<a jid="if" test="@{xc.items.size()}"
+				   class=" btn btn-primary btn-xs" href="@{rc.path}?id=@{xc.id}">下级</a>
+
+
+				<div class="btn-group">
+
+					<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+
+
+						<li><a data-del="">删除</a></li>
+						<li><a href="/admin/edit.html?id=@{xc.id}">编辑</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+					</ul>
+				</div>
+
+
+			</td>
+
+
+		</tr>
+
+	</table>
+
+</div>
+<div class="modal   ">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Modal title</h4>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" data-save="" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+
+	seajs.use(["rpc", "form"], function (rpc, fkform) {
+
+		$("table").on("click", " a[data-del]", function (e) {
+			if (!confirm("Are you really want do this?"))return;
+
+			var a = rpc.call("/handler/rpcmisc", "delete",
+					[  $(this).parents("[edit-id]").attr("edit-id") ]);
+			if (a == 'ok') location.reload();
+			else alert(a);
+
+
+		});
+
+		$("table").on("click", " tr td[edit-field]", function (e) {
+
+			var eid = $(this).parents("[edit-id]").attr("edit-id");
+			var efld = $(this).attr("edit-field");
+			var eform = $(this).parents("[edit-form]").attr("edit-form");
+
+
+			var a = rpc.call("/handler/rpcmisc", "getFieldContent",
+					[  eid, efld, eform], function (a) {
+
+
+						$('.modal').on('shown.bs.modal', function (e) {
+							$(".modal .modal-body").html(a);
+						});
+						$(".modal .modal-body").html("");
+						$(".modal").modal();
+						$("[data-save]").off("click");
+						$("[data-save]").on("click", function (e) {
+
+							var v = new fkform().getValue(efld)
+
+							var a = rpc.call("/handler/rpcmisc", "setFieldContent",
+									[  eid, efld, eform, v]);
+							if (a == 'ok') {
+								$('.modal').modal('hide')
+								location.reload();
+							} else {
+								alert(a);
+							}
+
+						});
+					});
+
+			//$(this).html(a);
+
+
+		});
+
+	})
+
+
+</script>

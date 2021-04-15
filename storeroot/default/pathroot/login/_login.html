@@ -1,0 +1,140 @@
+<div class="row">
+
+
+    <div class="col-md-8 col-md-offset-2">
+        <h2 align="center"><i class="fa fa-balance-scale fa-phone-square "></i> <b>
+            @{g:rc.sc.name}</b>
+            <span class="visible-xs-inline"> @{rc.page.screenName}</span></h2>
+        <br>
+        <br>
+
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+
+        <div jid="import" page="/fi/form-error.shtml"></div>
+
+        <form method="post" role="form" id="form_login" action="#">
+
+            <div class="form-group">
+
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-mobile-phone "></i>
+                    </div>
+
+                    <input type="text" class="form-control" value="@html{_p.username}" name="username" id="username"
+                           placeholder="请输入你的手机号码"
+                           autocomplete="off"/>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-key"></i>
+                    </div>
+
+                    <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码或短信验证码"
+                           autocomplete="off"/>
+                    <span class="input-group-btn ">
+
+                    <button class="btn btn-default" value="发验证码" type="button" id="send"><i class="fa fa-send"></i> 发送验证码
+                      </button>
+                     </span>
+
+                </div>
+
+            </div>
+            <div class="form-group ">
+
+                <div class="label  pull-right ">
+                    <p>
+                        <a>查看隐私协议和使用说明</a>
+                    </p>
+
+                </div>
+
+                <div class="label pull-left">
+                    <p>
+                        <input type="hidden" id="issms" name="issms" value="@{_pi.issms}">
+                        <a id="toggle">切换短信验证码登录</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group" align="center">
+                <button type="submit" class="btn btn-primary   btn-login"
+                        style="padding-left: 100px;padding-right: 100px">
+                    <i class="fa fa-sign-in"></i>
+                    登录
+                </button>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<script>
+
+    var countdown = 60;
+
+    function settime(obj) { //开启验证码倒计时
+        if (countdown == 0) {
+            obj.attr('disabled', false);
+            //obj.removeattr("disabled");
+            obj.html("<i class='fa fa-send'></i>发送验证码");
+            countdown = 60;
+            return;
+        } else {
+            obj.attr('disabled', true);
+            obj.text(countdown + "秒后重新发送");
+            countdown--;
+        }
+        setTimeout(function () {
+                settime(obj)
+            }
+            , 1000)
+    }
+    function setsms() {
+        if ($("#issms").val() == '0') {
+            $("#toggle").text("使用短信验证码登录")
+            $("#send").parent().hide()
+        } else {
+            $("#toggle").text("使用密码登录")
+            $("#send").parent().show()
+        }
+    }
+
+    setsms()
+    $("#toggle").on("click", function () {
+        if ($("#issms").val() == '0') {
+            $("#issms").val('1')
+        } else {
+            $("#issms").val('0')
+        }
+        setsms()
+    })
+    seajs.use("rpc", function (rpc) {
+
+
+
+        $("#send").on("click", function () {
+            rpc.callpage("send", [$("#username").val()], function (v) {
+                if (v === 'ok') {
+                    alert('短信验证码已发送，请查收..')
+                    settime($('#send'));
+                } else alert(v)
+            })
+        })
+
+
+    });
+
+
+</script>
+
+      

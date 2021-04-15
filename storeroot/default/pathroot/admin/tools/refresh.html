@@ -1,0 +1,15 @@
+<h2>该功能将刷新所有的页面，部署在生产环境会用到。开发时会自动刷新</h2>
+<div jid="if" test="@{rc.isPost()}">
+  @{rc.hasParam("item","x")?rc.site.refeshAll();'xok' :"3"}
+  @{rc.hasParam("item","c")?rc.site.clearCache();'cok' :"4"}
+  
+
+</div>
+<form method="POST">
+ 枚举: <input type="checkbox" name="item" value="x" /> <br/>
+ 缓存: <input type="checkbox" name="item" value="c" /> <br/>
+ 
+  
+  <input type="submit"    />
+  
+</form>

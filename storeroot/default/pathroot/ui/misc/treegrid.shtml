@@ -1,0 +1,5 @@
+<div jid="tohead" include="false">
+
+	<link rel="stylesheet" href="@{_cfg.static}/jquery-treegrid/css/jquery.treegrid.css">
+	<script type="text/javascript" src="@{_cfg.static}/jquery-treegrid/js/jquery.treegrid.js"></script>
+</div>

@@ -1,0 +1,11 @@
+<h3>@{comment}</h3>
+<div jid="import" page="/fi/form-error.shtml"></div>
+<form role="form" action="@{_p.id}/@{_p.name}.json" class="form-horizontal" jid="form"
+      model="@{fm}"
+      method="get">
+    <div jid="import" page="/fi/form-cnt.shtml"></div>
+</form>
+
+<div jid="code">
+    rc.addHeader('X-XSS-Protection','0');
+</div>

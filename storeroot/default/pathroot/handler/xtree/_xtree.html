@@ -1,0 +1,12 @@
+[
+<div type="application/json" jid="for" delimiter="," data="@{rc.e(rc.param('id','/')).childrenSort}" var="e"
+        include="false">
+    {
+        "id": "@js{e.id}",
+        "text": "@js{e.name}@js{e.name==e.screenName?'':'   '+e.screenName}  ",
+        "state": "@js{e.hasChild()?'closed':'open'}",
+        "iconCls": "@{e.icon} fa-lg",
+         "childTypes":[<a include="false" jid="for" delimiter="," data=@{e.mightChildTypes()} var=s>"@{s}"</a>]
+    }
+
+</div>]

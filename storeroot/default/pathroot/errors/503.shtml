@@ -1,0 +1,8 @@
+<div class="alert alert-warning" role="alert">
+
+	<h3>503</h3>
+	内部服务器错误：@html{rc.req.uri}
+	<pre>	@{fk-errormsg}</pre>
+
+
+</div>

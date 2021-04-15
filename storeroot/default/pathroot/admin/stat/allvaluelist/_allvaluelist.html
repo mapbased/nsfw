@@ -1,0 +1,42 @@
+<script jid="code" type="javascript" run="inplace">
+
+    var a = [];
+    rc.e("/").travelDescendant(
+            function (t) {
+
+
+                if (t.getXTypeName() == 'SchemaField' && t.valueList != null) {
+
+                    a.push(t)
+                }
+                if (t.getXTypeName() == 'FormFieldModel' && t.vl() != null) {
+
+                    a.push(t)
+                }
+
+
+            }
+    )
+    rc.setVar("vxe", a);
+
+</script>
+
+
+<div class="table-responsive">
+
+
+    <table class="table table-bordered">
+
+
+        <tr jid="for" var="e" data="@{vxe.asObjectArray()}">
+
+
+            <td>@{rc.varInc('idxv')}&nbsp; </td>
+            <td>@{e.getXTypeName() }</td>
+            <td> @{e.id}</td>
+            <td>@{e.getXTypeName()=='SchemaField'?e.valueList:e.vl()}</td>
+
+
+        </tr>
+    </table>
+</div>

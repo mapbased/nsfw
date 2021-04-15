@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="/static/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/bootstrap-3.3.4/css/bootstrap-theme.css" rel="stylesheet"/>
+
+    <link href="/static/Font-Awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!--[if lt IE 9]>
+    <script src="/static/js/html5shiv.js"></script>
+    <script src="/static/js/respond.min.js"></script>
+    <script src="/static/js/json2.js"></script>
+    <![endif]-->
+
+
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/bootstrap-3.3.4/js/bootstrap.js"></script>
+    <script id="seajsnode" src="/static/js/sea.js"></script>
+
+    <link jid="head"/>
+</head>
+<body>
+
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle getTarget grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span> <span
+                class="icon-bar"></span> <span class="icon-bar"></span> <span
+                class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/"><b>@{rc.sc.name}</b></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse"
+         id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"
+                data="@{_e.'/'.getPageChildren()}" var="a"><a
+                    href="/@{a.name}">@{a.screenName} </a></li>
+            <li class="dropdown @{rc.path.startsWith('/app/')?'active'}"><a
+                    href="#" class="dropdown-toggle" data-toggle="dropdown"> <span
+                    class="glyphicon glyphicon-cog"></span> 应用 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"
+                        data="@{_e.'/app'.getPageChildren()}" var="a"><a
+                            href="/app/@{a.name}">@{a.screenName} </a></li>
+
+                </ul>
+            </li>
+        </ul>
+        <!--  form class="navbar-form navbar-left" role="search">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search">
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form -->
+        <ul jid="if" test="@{rc.userId}" class="nav navbar-nav navbar-right">
+            <li jid="if" test="@{rc.designMode}"><a
+                    href="/admin/edit.html?id=@{rc.path}">Edit</a></li>
+            <li jid="if" test="@{rc.designMode}"><a
+
+                    onclick="javascript:seajs.use('rpc',function(rpc){
+rpc.call('/handler/rpcmisc','reloadSite',[],function(a){alert(a)})                   
+}); "
+                    href="#">reload</a></li>
+
+
+            <li class="dropdown @{rc.path.startsWith('/u/')?'active'}"><a
+                    href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                    class="badge pull-left">42</span>
+                @html{_e./ds/wenda/user_info.getField('name',rc.userId)} <b
+                        class="caret"></b></a>
+                <ul class="dropdown-menu">
+
+                    <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"
+                        data="@{_e.'/u'.getPageChildren()}" var="a"><a
+                            href="/u/@{a.name}">@{a.screenName} </a></li>
+                    <li class="divider"></li>
+                    <li><a href="/login/logout"> <span
+                            class="glyphicon glyphicon-off"></span> 退出
+                    </a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul jid="if" test="@{rc.userId}" r="true"
+            class="nav navbar-nav navbar-right">
+            <li jid="if" test="@{rc.designMode}"><a
+                    href="/admin/edit.html?id=@{rc.path}">注册</a></li>
+
+            <li class="dropdown @{rc.path.startsWith('/u/')?'active'}">
+                <ul class="dropdown-menu">
+
+                    <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"
+                        data="@{_e.'/u'.getPageChildren()}" var="a"><a
+                            href="/u/@{a.name}">@{a.screenName} </a></li>
+                    <li class="divider"></li>
+                    <li><a href="/login/logout"> <span
+                            class="glyphicon glyphicon-off"></span> 退出
+                    </a></li>
+                </ul>
+            </li>
+        </ul>
+
+
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>
+
+<div class="container">
+    <div jid="if" test="@{rc.mvel(false)}" class="alert alert-danger">
+        <strong>Oh snap!</strong> <a href="#" class="alert-link"> linke</a>
+        这是一个提醒条，向用户推送重要信息.
+        <button type="button" class="close" data-dismiss="alert"
+                aria-hidden="true">×
+        </button>
+    </div>
+
+
+    <div jid="Insert"></div>
+</div>
+<div jid="totail"></div>
+
+</body>
+
+</html>

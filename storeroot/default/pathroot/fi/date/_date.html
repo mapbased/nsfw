@@ -1,0 +1,26 @@
+<input class="form-control"
+	   type="text" name="@{fk-fm.name}" value="@html{fk-fm.singleParamValue(rc) }"/>
+
+<script>
+	var DPVERSION = "/static/bootstrap-datepicker-1.3.0/";
+	seajs.use([DPVERSION + "css/datepicker3.css"
+		, DPVERSION + "js/bootstrap-datepicker.js"], function (ee) {
+
+		seajs.use(DPVERSION + "js/locales/bootstrap-datepicker.zh-CN.js"
+				, function (ee) {
+
+					$('input[name=@{fk-fm.name}]').datepicker({
+						format: "yyyy-mm-dd",
+						todayBtn: "linked",
+						language: "zh-CN",
+						multidate: false,
+						autoclose: true,
+						todayHighlight: true
+					});
+				});
+
+
+	});
+</script>
+
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>

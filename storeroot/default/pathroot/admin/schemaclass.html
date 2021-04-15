@@ -1,0 +1,11 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+<script jid="code" runat="Action">
+	rc.setVar("x", rc.site.getXEnum(rc.param("id", '/ds/wenda/topic')));
+</script>
+<pre>
+<div jid="for" data="@{x.getChildren('SchemaField')}" var="sf" include="false">
+
+  @{sf.toJava()} 
+  
+</div>
+</pre>

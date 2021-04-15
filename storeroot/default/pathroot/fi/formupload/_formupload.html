@@ -1,0 +1,60 @@
+<a class="btn btn-primary btn-xs" uploadname="@{fk-fm.name}" data-name="upload"
+   data-action="/handler/uploadmulti">选择文件</a>
+
+<p class="help-block">@{fk-fm.msg}</p>
+
+<div class="row photoes">
+	<div class="col-xs-6 col-md-3 " jid="for" data="@{rc.params(rc.v('fk-fm').name)}" var="img">
+
+		<a href="@{_cfg.img}/@{img}" target="_blank" class="thumbnail">
+			<img src="@{_cfg.img}/320x240f_@{img}">
+		</a>
+
+		<div class="btn btn-default btn-block btn-xs rm-btn"> 移除
+			<input type="hidden" value="@{img}" name="@{fk-fm.name}"/>
+		</div>
+	</div>
+
+</div>
+
+<div class="col-xs-6 col-md-3 fktmplate hidden">
+
+	<a href="" target="_blank" class="thumbnail">
+		<img/>
+	</a>
+
+	<div class="btn btn-default btn-block btn-xs rm-btn"> 移除
+		<input type="hidden"/>
+	</div>
+</div>
+
+
+<script>
+	$("div.photoes").on("click", "div.rm-btn", function (e) {
+
+		$(this).parent().remove();
+	});
+
+	seajs.use("upload", function (Uploader) {
+		var uploader = new Uploader({'trigger': '[uploadname=@{fk-fm.name}]'});
+		// more friendly way
+		// var uploader = new Uploader('#upload');
+
+		uploader.success(function (response) {
+
+			var imgbox = $(".fktmplate").clone();
+			$(".photoes").append(imgbox);
+			imgbox.removeClass("hidden");
+			imgbox.removeClass("fktmplate");
+
+			$("img", imgbox).attr("src", "@{_cfg.img}/320x240f_" + response);
+			$("input", imgbox).attr("value", response);
+			$("input", imgbox).attr("name", '@{fk-fm.name}');
+
+
+		})
+
+	})
+
+
+</script>

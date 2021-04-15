@@ -1,0 +1,23 @@
+<table class="table">
+<tr>
+  <th>名字
+  </th>
+  <th>值
+  </th>
+  </tr>
+  
+  <tr jid="for" data=@{rc.getParameters()} var=v>
+    <td>
+      @{v.key}
+      </td>
+   
+        <td > 
+          <div jid="for" data="@{v.value}" var="v">
+           @html{v} 
+            </div>
+          
+          
+    </td>
+    
+  </tr>
+</table>

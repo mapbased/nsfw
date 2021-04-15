@@ -1,0 +1,44 @@
+<fieldset>
+	<div class="legend">
+		<legend class="">@{g:rc.v('fk-model').screenName}</legend>
+	</div>
+
+	<div jid="for" data="@{fk-model.fieldsSorted}" var="fk-fm" include="false">
+		<div jid="if" test="@{fk-fm.hidden(rc)}" include="false" reverse="true">
+			<div jid="import" page="form-row.shtml"></div>
+			<div jid="else">
+				<div   jid="if"
+					 test="@{fk-fm.hasDynamicFields()}">
+
+
+					<div jid="for" data="@{fk-fm.vl()}" var="vi" fk-dyn-value="@{vi.value}">
+						<div jid="if" test="@{vi.value==rc.param(rc.v('fk-fm').name)}" include="false">
+							<div include="false" jid="for"
+								 data="@{vi.src.getChildren('FormFieldModel')}" var="fk-fm">
+								<div jid="import" page="form-row.shtml"></div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" class="btn btn-primary btn-block"/>
+		</div>
+
+	</div>
+</fieldset>
+
+<script>
+	seajs.use("form", function (f) {
+		new f($("fieldset"));
+	});
+
+
+</script>

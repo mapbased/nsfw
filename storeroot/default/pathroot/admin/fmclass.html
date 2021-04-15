@@ -1,0 +1,15 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+<script jid="code" runat="Action">
+	rc.setVar("x", rc.site.getXEnum(rc.param("id", '/ds/wenda/topic')));
+</script>
+ 
+<pre>
+  
+<i include="false" jid="for" data="@{x.getChildren('FormFieldModel')}" var="sf" include="false">
+
+  @{sf.toJava()} 
+  
+</i>
+ 
+</pre>
+ 

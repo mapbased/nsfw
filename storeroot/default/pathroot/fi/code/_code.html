@@ -1,0 +1,52 @@
+ <textarea name="@{fk-fm.name}" fk-ff-name="@{fk-fm.name}" fk-type="code" fk-ff-com="textarea[name=@{fk-fm.name}]">@html{fk-fm.singleParamValue(rc)}</textarea>
+
+
+<script id="code">
+	//此处不得已使用了全局变量
+	var fk_g_txa@{fk-fm.name}=$("textarea[name='@{fk-fm.name}']");
+	var CodeMirrorVersion = "/static/codemirror-4.2"
+	seajs.use([
+				  CodeMirrorVersion + "/lib/codemirror.css"
+		,   CodeMirrorVersion + "/addon/hint/show-hint.css"
+		,   CodeMirrorVersion + "/lib/codemirror.js"], function () {
+
+
+		seajs.use([ CodeMirrorVersion + "/addon/hint/show-hint.js" 
+            ,   CodeMirrorVersion + "/addon/hint/xml-hint.js"
+			,   CodeMirrorVersion + "/addon/hint/html-hint.js"
+			,   CodeMirrorVersion + "/mode/xml/xml.js"
+			,   CodeMirrorVersion + "/mode/javascript/javascript.js"
+			,   CodeMirrorVersion + "/mode/css/css.js"
+			,   CodeMirrorVersion + "/mode/htmlmixed/htmlmixed.js"
+
+		], function () {
+          $(document).ready(function(){
+			 var txta = fk_g_txa@{fk-fm.name}[0];
+            if(!txta){
+                 return;
+            }
+			txta.cm = CodeMirror.fromTextArea(txta, {
+				lineNumbers: true,
+
+				mode: "text/html"
+			});
+			txta.getValue = function () {
+				return this.cm.getValue()
+			}
+            });
+		});
+	});
+</script>
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>
+
+<style>
+	.CodeMirror {
+		border: 1px solid #eee;
+		height: auto;
+	}
+
+	.CodeMirror-scroll {
+		overflow-y: hidden;
+		overflow-x: auto;
+	}
+</style> 

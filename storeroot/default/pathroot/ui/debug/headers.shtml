@@ -1,0 +1,22 @@
+<table class="table">
+    <tr>
+        <th>名字
+        </th>
+        <th>值
+        </th>
+    </tr>
+
+    <tr jid="for" data=@{rc.req.headers().names()} var=v>
+        <td>
+            @{v}
+        </td>
+
+        <td>
+
+            @html{rc.getHeader(v)}
+
+
+        </td>
+
+    </tr>
+</table>

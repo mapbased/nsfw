@@ -1,0 +1,71 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+
+
+<div jid="setvar" name="x" value="@{rc.e(rc.param('id','/ds/se/topic'))}"></div>
+<div jid="setvar" name="nx" value="@{x.dataSource.schemaFromDataStore(x)}"></div>
+
+<p>简单的Schema同步工具。注意：对于搜索引擎的泛型字段，使用时要特别小心，可能会删掉你正常在用的字段</p>
+<div class="row">
+	<div class=" col-sm-6">
+
+		<table class="table">
+			<caption>Application</caption>
+
+			<tr class="@{nx.items.get(f.value.name)==null?'danger'}" jid="for" data="@{x.items.values()}" var="f">
+				<td>@{f.value.name}</td>
+				<td title="@html{f.value.screenName}">@max(8){f.value.screenName}</td>
+
+			</tr>
+
+
+		</table>
+	</div>
+	<div class=" col-sm-6">
+
+		<table class="table">
+			<caption>DataStore</caption>
+
+			<tr class="@{x.items.get(f.value.name)==null?'success'}" jid="for" data="@{nx.items.values()}" var="f">
+				<td>@{f.value.name}</td>
+				<td title="@html{f.value.screenName}">@max(8){f.value.screenName}</td>
+
+			</tr>
+
+
+		</table>
+	</div>
+</div>
+<script jid="code" id="dosync" runat="rpc" type="application/mvel">
+   rc.setVar("x", rc.e( rpcparam[0]));
+
+  rc.setVar("nx",x.dataSource.schemaFromDataStore(x));
+
+  foreach(xi:x.items.values()){
+     if(nx.items.get(xi.value.name)==null){
+     rc.getSite().delete(xi.value.id);
+     }
+  }
+foreach(xi:nx.items.values()){
+
+     if(x.items.get(xi.value.name)==null){
+
+      rc.e('Schema').schema.addUsingGivenId(x.id+"/"+ xi.value.name,xi.value.normalAttributes(rc.site));
+     }
+  }
+   "ok";
+
+
+</script>
+<input type="button" class="btn btn-block btn-default" id="sync" value="同步">
+<script>
+	seajs.use("rpc", function (rpc) {
+		$("#sync").on("click", function () {
+
+
+			var resp = rpc.invoke("dosync", ['@js{x.id}']);
+			if (resp == 'ok') {
+				location.reload();
+			}
+		});
+	});
+</script>

@@ -1,0 +1,45 @@
+<textarea fk-remove="@{fk-fm.exta}" style="visibility: hidden"
+		  name="@{fk-fm.name}"
+		  fk-ff-name="@{fk-fm.name}"
+		  fk-ff-data="textarea[name=@{fk-fm.name}]">@html{fk-fm.singleParamValue(rc)}</textarea>
+
+
+<script>
+	seajs.use("/static/ckeditor_4.4.0/ckeditor.js", function (e) {
+		seajs.use("/static/ckeditor_4.4.0/adapters/jquery.js", function (e) {
+			// $('[name=@{fk-fm.name}]').ckeditor();
+
+
+
+			var editor = CKEDITOR.replace('@{fk-fm.name}', {
+				toolbar: [
+					['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+					['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+					['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+					['Image', 'Table', 'HorizontalRule' ],
+
+					['TextColor', 'BGColor'],
+					['Link', 'Unlink', 'Anchor'],
+
+					['Maximize', 'ShowBlocks', '-'],
+					['Styles', 'Format'],
+					['Font', 'FontSize']
+
+
+				],
+				on: { change: function (event) {
+					var data = event.editor.getData();
+
+					var ee = $('textarea[name=@{fk-fm.name}]');
+					ee.val(data);
+
+				}
+				},
+				language: 'zh-cn',
+				filebrowserImageUploadUrl: '/handler/upload?type=Images'
+			});
+		});
+	})
+</script>
+
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>

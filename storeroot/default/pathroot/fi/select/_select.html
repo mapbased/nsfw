@@ -1,0 +1,30 @@
+<select multiple-="@{fk-fm.attr('multiple')}" readonly-="@{fk-fm.readonly}" fk-ff-name="@{fk-fm.name}"
+		fk-ff-com="select[name=@{fk-fm.name}]" class="form-control"
+		fk-ff-data="select[name=@{fk-fm.name}] option:selected"
+		fk-depends="@{fk-fm.attr('fk-depends')}" fk-fm-id="@{fk-fm.id}"
+		data-placeholder="@{fk-fm.attr('placeholder')}"
+		name="@{fk-fm.name}">
+
+
+	<option jid="for" data="@{fk-fm.vl()}" var="fk-em"
+			label="@{fk-em.screenName}" selected-="@{fk-fm.checked(rc)}"
+			value="@{fk-em.value}">@{fk-em.screenName}
+	</option>
+</select>
+
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>
+<script>
+
+	var select2Ver = "@{_cfg.static}/select2-3.5.1";
+	seajs.use([select2Ver + "/select2.css", select2Ver + "/select2-bootstrap.css", select2Ver + "/select2.js"], function () {
+
+
+				var a = $("select[name=@{fk-fm.name}]");
+
+				a.select2();
+
+
+			}
+	)
+
+</script>

@@ -1,0 +1,46 @@
+<div>
+    <input fk-ff-com="input[name=@{fk-fm.name}]" type="hidden" name="@{fk-fm.name}"
+           fk-ff-name="@{fk-fm.name}" name="@{fk-fm.name}"
+           value="@html{fk-fm.singleParamValue(rc)}">
+
+
+    <div class="row">
+        <div class="col-sm-@{colcnt} col-xs-12" jid="for"
+             data="@{rc.fh.getDatas(rc)}" var="os">
+            <select size="@{fk-fm.attrInt('size',5)}"
+                    readonly-="@{fk-fm.readonly}"
+                    class="form-control">
+
+
+                <option jid="for" data="@{os}" var="oi"
+                        label="@{oi.name}" selected-="@{oi.selected}"
+                        code="@{oi.code}"
+                        value="@{oi.cid}">@{oi.name}
+                </option>
+            </select>
+        </div>
+
+
+    </div>
+
+</div>
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>
+<script>
+    seajs.use("rpc", function (rpc) {
+
+        $("input[name=@{fk-fm.name}] + div").on(" change", "select", function (e) {
+            e.stopPropagation();
+            $("select", $(this).parent().nextAll()).html("");
+            var cs = rpc.callfragment("/fi/categoryselect", "getValueListData", [$(this).val(), '@{fk-fm.id}']);
+            var ns = $("select", $(this).parent().next());
+            $("input[name=@{fk-fm.name}]").val($(this).val());
+            $.map(cs, function (e) {
+                ns.append("<option value=" + e.cid + ">" + e.name + "</option>");
+
+            })
+
+
+        })
+    });
+
+</script>

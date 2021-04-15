@@ -1,0 +1,29 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+<table class="table">
+
+  <tr jid="for" data="@{_e./ds.children}" var="ds">
+  <td>
+    @{ds.name}  
+  </td>
+  <td>
+     @{ds.children.size()}
+  </td>
+    <td>
+      <input type="button" onclick="reload('@{ds.id}')" value="reload"/>
+  </td>
+  
+  </tr>
+</table>
+<script>
+  function reload(id){
+    seajs.use("rpc",function(FK_RPC){
+      alert( FK_RPC.invoke("reload",[id]));
+    })
+   
+    
+  }
+</script>
+<script jid="code" id="reload" run="rpc">
+  rc.e(rpcparam[0]).load(rc.site);
+  'ok';
+</script>

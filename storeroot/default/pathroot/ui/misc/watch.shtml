@@ -1,0 +1,1 @@
+<script jid="if" test="@{rc.localIp}" src="/handler/watchjs?m=@{rc.ctime}"></script>

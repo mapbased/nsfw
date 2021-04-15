@@ -1,0 +1,9 @@
+ 
+<input type="@{fk-fm.attr('type','text')}" fk-remove="@{fk-fm.exta}"
+	placeholder="@{fk-fm.attr('placeholder')}"
+	readonly-="@{fk-fm.readonly}" name="@{fk-fm.name}"
+	class="form-control "
+	value="@html{fk-fm.singleParamValue(rc) }" fk-ff-name="@{fk-fm.name}"
+	fk-ff-data="input[name='@{fk-fm.name}']" />
+ <span jid="if" test="@{fk-fm.msg}"  class="help-block">@{fk-fm.msg}</span>
+ 

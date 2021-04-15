@@ -1,0 +1,31 @@
+<div class="input-group date">
+
+
+	<input class="form-control" data-format="yyyy/MM/dd hh:mm:ss"
+		   type="text" name="@{fk-fm.name}" value="@html{fk-fm.singleParamValue(rc) }"/>
+	<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+</div>
+<script>
+	var DPVERSION = "/static/bootstrap-datetimepicker-0.0.11/";
+	seajs.use([DPVERSION + "build/css/bootstrap-datetimepicker.min.css"
+		, DPVERSION + "build/js/bootstrap-datetimepicker.min.js"
+
+	], function (ee) {
+		seajs.use(DPVERSION + "src/js/locales/bootstrap-datetimepicker.zh-CN.js", function (e) {
+
+
+			$('.date').datetimepicker({
+				format: "yyyy-MM-dd hh:mm:ss",
+				todayBtn: "linked",
+				language: "zh-CN",
+				multidate: false,
+				autoclose: true,
+				todayHighlight: true
+			});
+
+		});
+
+	});
+</script>
+
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>

@@ -1,0 +1,154 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+<script jid="code" runat="Action">
+	rc.setVar("x", rc.site.getXEnum(rc.param("id", '/ds/wenda/topic')));
+</script>
+
+<h1> @{x.id}的数据</h1>
+<form action="#" method="get">
+	<div class="input-group">
+		<input type="hidden" name="id" value="@html{x.id}">
+		<input type="text" name="e.q" class="form-control" placeholder="输入查询词" value="@html{_p.'e.q'}"/>
+ <span class="input-group-btn">
+ <button type="submit" class="btn btn-default">搜索</button>
+   </span>
+	</div>
+</form>
+<div jid="query" fields=" " schema="@{x}" id="e" pagesize="10">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<tbody>
+			<tr>
+				<th> Delete</th>
+				<th jid="for" title="@html{sf.screenName}" data="@{x.getChildren('SchemaField')}" var="sf">
+
+					<span jid="if" test="@{sf.sortable}">
+					<a href="@{e.changeUrl('e.sa',rc.p('e.sa')==sf.name?sf.name+':asc':sf.name)}">@html{sf.name}</a>
+					<span jid="else">@html{sf.name} </span>
+					</span>
+
+				</th>
+
+			</tr>
+			<tr edit-id="@html{e.get(x.keyFieldName) }" jid="for" data="@{e}">
+				<td><a data-del=""><i class="glyphicon glyphicon-remove"></i></a></td>
+				<td edit-field="@{sf.name}" jid="for" data="@{x.getChildren('SchemaField')}"
+					title="@html{e.get(sf.name) }" var="sf">
+					@html.wmax(5){e.get(sf.name) }
+
+				</td>
+
+			</tr>
+
+
+			</tbody>
+
+
+		</table>
+	</div>
+</div>
+<ul class="pagination">
+	<li class="@{p.selected?'class=active'}"
+		jid="for"
+		data="@{e.pages}" var="p"><a href="@{p.link}">
+		@{p.label}</a></li>
+
+
+</ul>
+
+
+<div class="modal   ">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Modal title</h4>
+			</div>
+			<div class="modal-body">
+				<textarea class="form-control ea"></textarea>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" data-save="" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script jid="code" runat="rpc" id="getSchemaData">
+	//rc.v('x').getField(rpcparam[0], rpcparam[1]);
+	rc.site.getXEnum(rpcparam[0]).getField(rpcparam[1], rpcparam[2]);
+</script>
+<script jid="code" runat="rpc" id="setFieldContent">
+
+	rc.site.getXEnum(rpcparam[0]).changeFieldValue(rpcparam[1], rpcparam[2], rpcparam[3]);
+
+
+</script>
+
+<script jid="code" runat="rpc" id="delete">
+
+	rc.site.getXEnum(rpcparam[0]).delete(rpcparam[1], rc);
+	'ok';
+
+
+</script>
+
+
+<script>
+
+	seajs.use(["rpc", "form"], function (rpc, fkform) {
+
+		$("table").on("click", " a[data-del]", function (e) {
+			if (!confirm("真的要删除吗？?"))return;
+
+			var eid = $(this).parents("[edit-id]").attr("edit-id");
+			var a = rpc.invoke("delete",
+					[ '@js{x.id}', eid ])
+			if (a == 'ok')  $(this).parents("[edit-id]").hide('slow');
+			else alert(a);
+
+
+		});
+
+		$("table").on("click", " tr td[edit-field]", function (e) {
+
+			var eid = $(this).parents("[edit-id]").attr("edit-id");
+			var efld = $(this).attr("edit-field");
+
+
+			var a = rpc.invoke("getSchemaData",
+					[ '@js{x.id}', efld, eid ], function (a) {
+
+
+						$('.modal').on('shown.bs.modal', function (e) {
+							$(".modal .modal-body textarea").val(a);
+						});
+
+						$(".modal").modal();
+						$("[data-save]").off("click");
+						$("[data-save]").on("click", function (e) {
+
+
+							var a = rpc.invoke("setFieldContent",
+									['@js{x.id}', eid, efld, $(".modal .modal-body textarea").val()]);
+							if (a > 0) {
+								$('.modal').modal('hide')
+								location.reload();
+							} else {
+								alert(a);
+							}
+
+						});
+					});
+
+			//$(this).html(a);
+
+
+		});
+
+	})
+
+
+</script>

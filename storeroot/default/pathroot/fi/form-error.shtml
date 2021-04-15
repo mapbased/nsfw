@@ -1,0 +1,11 @@
+<div class="alert alert-danger" jid="if" test="@{rc.errorMap}">
+
+
+    <div jid="for" data="@{rc.errorMap}" var="e"><span class="glyphicon glyphicon-warning-sign"></span>
+        <span jid="if" test="@{fk-model.getFieldCaption(rc.getVar('e').key)}">
+ 
+ @{g:rc.v('fk-model').getFieldCaption(rc.getVar('e').key)}:
+    </span> @{e.value}
+    </div>
+</div>
+

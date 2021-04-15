@@ -1,0 +1,44 @@
+
+
+<script jid="if" test="@{rc.site.developeMode}">
+seajs.use("/static/ckeditor_4.4.0/ckeditor.js", function () {
+
+	seajs.use([
+				"/static/ckeditor_4.4.0/adapters/jquery.js"
+				, "rpc"],
+			function (b, FK_RPC) {
+
+
+				CKEDITOR.disableAutoInline = true;
+				$('[editable]').attr("contentEditable", true);
+				$('[editable]').ckeditor(
+						{
+							on: {
+								focus: function (event) {
+									var ee = $(event.editor.container);
+									var r = FK_RPC.call("/handler/rpcmisc",
+											"getPageContent", [ ee.attr("xpath"),
+												ee.attr("editable") ]);
+									event.editor.setData(r);
+
+								},
+								blur: function (event) {
+									var data = event.editor.getData();
+
+									var ee = $(event.editor.container);
+
+									var r = FK_RPC.call("/handler/rpcmisc", "modifyPage",
+											[ee.attr("xpath"), ee.attr("editable"), data]);
+									if (r == 'ok') {
+										location.reload();
+									}
+									else alert(r);
+
+								}
+							}
+						}
+				);
+			});
+
+});
+</script> 

@@ -1,0 +1,29 @@
+<div class="input-group">
+	<span class="input-group-addon">
+
+
+		<select readonly-="@{fk-fm.readonly}"
+                name="@{fk-fm.name}__prx">
+
+
+            <option jid="for" data="@{fk-fm.vl()}" var="fk-em"
+                    label="@{fk-em.screenName}"
+                    selected-="@{fk-fm.checked(rc,'__prx')}"
+                    value="@{fk-em.value}">@{fk-em.screenName}
+            </option>
+        </select>
+
+
+	</span>
+
+     <textarea rows="@{fk-fm.attr('rows',2)}" fk-remove="@{fk-fm.exta}"
+               name="@{fk-fm.name}"
+               fk-ff-name="@{fk-fm.name}" class="form-control @{fk-fm.attr('class')}  @{fk-fm.attr('autosize')}"
+               fk-ff-data="textarea[name=@{fk-fm.name}]">@html{fk-fm.singleParamValue(rc)}</textarea>
+
+ 
+</div>
+
+
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>
+ 

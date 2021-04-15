@@ -1,0 +1,38 @@
+    <div class="row">
+
+
+        <div class="col-md-8 col-md-offset-2">
+            <h4>请输入邮箱</h4>
+
+            <div jid="import" page="/fi/form-error.shtml"></div>
+
+            <form method="post" role="form" action="#">
+
+                <div class="form-group">
+
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+
+                        <input type="email" class="form-control" value="@html{_p.email}" name="email" id="email"
+                               placeholder="email"
+                               autocomplete="off"/>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block btn-login">
+                        <i class="fa fa-send"></i>
+                        Send eMail
+                    </button>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+       

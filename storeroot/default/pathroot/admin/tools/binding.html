@@ -1,0 +1,6 @@
+<h2>这个页面仅用于开发期间测试，部署到生产环境有安全问题</h2>
+<form method="GET">
+  <textarea type="text" name="binding" class="form-control"  rows=3 >@html{_p.binding}</textarea>
+  <input type="submit" class="btn btn-primary btn-block" value="提交" />
+</form>
+@html{rc.compileAndRender(rc.p('binding'))}

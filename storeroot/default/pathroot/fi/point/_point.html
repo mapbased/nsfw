@@ -1,0 +1,53 @@
+<div>
+
+<style type="text/css">
+body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DFd495ec476c17437cdcea52cad845d0"></script>
+ 
+<div id="allmap"></div>
+
+<script type="text/javascript">
+
+// �ٶȵ�ͼAPI����
+var map = new BMap.Map("allmap");
+var point = new BMap.Point(116.404, 39.915);
+map.centerAndZoom(point,15);
+var contextMenu = new BMap.ContextMenu();
+var txtMenuItem = [
+  {
+   text:'�Ŵ�',
+   callback:function(){map.zoomIn()}
+  },
+  {
+   text:'��С',
+   callback:function(){map.zoomOut()}
+  },
+  {
+   text:'���õ����',
+   callback:function(){map.setZoom(18)}
+  },
+  {
+   text:'�鿴ȫ��',
+   callback:function(){map.setZoom(4)}
+  },
+  {
+   text:'�ڴ���ӱ�ע',
+   callback:function(p){
+    var marker = new BMap.Marker(p), px = map.pointToPixel(p);
+    map.addOverlay(marker);
+   }
+  }
+ ];
+
+
+ for(var i=0; i < txtMenuItem.length; i++){
+  contextMenu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
+  if(i==1 || i==3) {
+   contextMenu.addSeparator();
+  }
+ }
+ map.addContextMenu(contextMenu);
+</script>
+
+</div>

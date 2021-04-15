@@ -1,0 +1,6 @@
+<ul class="pagination">
+	<li class="@{p.selected?'active'}"  jid="for"
+		data="@{qr.pages}" var="p"><a href="@{p.link}"> @{p.label}</a></li>
+
+
+</ul>

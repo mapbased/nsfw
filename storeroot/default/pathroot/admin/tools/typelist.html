@@ -1,0 +1,13 @@
+<div class="container">
+    <table class="table table-bordered" width="100%">
+
+        <tr jid="for" data="@{rc.site.enums}" var="e">
+            <td><i class="@{e.value.?value.icon}"></i></td>
+            <td>@{rc.varInc('dd')}</td>
+            <td>@{e.key}</td>
+            <td>@{e.value.?value.?getXTypeName()}</td>
+
+
+        </tr>
+    </table>
+</div>

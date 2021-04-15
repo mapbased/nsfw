@@ -1,0 +1,13 @@
+target
+logs
+*.iml
+*.ipr
+*.iws
+.idea
+/upload
+/web
+/out
+
+.ideaDataSources/*
+
+*.jar

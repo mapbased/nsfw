@@ -1,0 +1,25 @@
+<input type="text" fk-remove="@{fk-fm.exta}" autocomplete="off"
+	   placeholder="@{fk-fm.attr('placeholder')}"
+	   readonly-="@{fk-fm.readonly}" name="@{fk-fm.name}"
+	   class="form-control "
+	   value="@html{fk-fm.singleParamValue(rc) }" fk-ff-name="@{fk-fm.name}"
+	   data-source=""
+	   fk-ff-data="input[name='@{fk-fm.name}']"/>
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>
+
+<script>
+
+	seajs.use(["rpc", "bootstrap3-typeahead"], function (rpc, bt) {
+		var path = '@js{fk-fm.attr("path","/handler/curpage")}';
+		var methodname = '@js{fk-fm.attr("method","typeahead")}';
+
+		$("input[name='@{fk-fm.name}']").typeahead(
+				{
+					items: parseInt('@{fk-fm.attr("itemcnt","25")}'),
+					source: function (txt) {
+						return rpc.call(path, methodname, [txt]);
+					}
+				});
+	})
+
+</script>

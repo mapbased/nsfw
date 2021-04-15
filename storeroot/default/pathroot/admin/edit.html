@@ -1,0 +1,11 @@
+ <div jid="import" page="/admin/xfunctions/menu" ></div> 
+
+<div jid="import" page="/fi/form-error.shtml"></div>
+<form role="form" class="form-horizontal" jid="form" model="@{rc.site.getXEnum(rc.param('id','/')).getFormModel(rc.site)}"
+	  method="post">
+	<div jid="import" page="/fi/form-cnt.shtml"></div>
+</form>
+
+<div jid="code">
+	rc.addHeader('X-XSS-Protection','0');
+</div>

@@ -1,0 +1,9 @@
+<div >
+	<label>
+		<input class="checkbox-inline" type="checkbox" readonly-="@{fk-fm.readonly}"
+			   checked-="@{fk-fm.singleParamValue(rc)==rc.v('fk-fm').attr('checkedval','true')}" name="@{fk-fm.name}"
+			   value="@{fk-fm.attr('checkedval','true')}" fk-ff-name="@{fk-fm.name}"
+			   fk-ff-com="input[name=@{fk-fm.name}]"
+			   fk-ff-data="input[name=@{fk-fm.name}]:checked"/><span include="false" jid="if" test="@{fk-fm.msg}">@{fk-fm.msg}</span>
+	</label>
+</div>

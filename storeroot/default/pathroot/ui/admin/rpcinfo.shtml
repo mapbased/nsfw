@@ -1,0 +1,79 @@
+<table class="table table-bordered " data-idx=" @{rc.setVar('url','')} @{rc.setVar('idx',0)}">
+    <caption>
+        <h3 id="@{v.getMethodName()}"> @{v.getMethodName()}</h3>
+
+        <p>
+            <span jid="setvar" name="cls" value="@{v.method.?returnType.getName()}"></span>
+            Return :
+
+            <a href="/static/javadoc/@{cls.?replaceAll('\\.','/').replaceAll('\\$','\\.')}.html" jid="if"
+               test="@{cls.startsWith('com.mapkc')}">
+                @{cls} <span jid="else">@{cls}</span> </a>
+            <span jid="if" test="@{v.firstGenericClass()}">
+                <span jid="setvar" name="cls" value="@{v.firstGenericClass().getName()}"></span>
+
+                < <a href="/static/javadoc/@{cls.?replaceAll('\\.','/').replaceAll('\\$','\\.')}.html" jid="if"
+                     test="@{cls.startsWith('com.mapkc')}">
+                @{cls} <span jid="else">@{cls}</span> </a>>
+            </span>
+
+
+        </p>
+
+        <p>
+            访问权限： @{v.method.?getAnnotation(com.mapkc.nsfw.handler.JsRPCMethod).access()}
+
+        </p>
+
+        <p>
+            @{v.method.?getAnnotation(com.mapkc.nsfw.handler.Comment).value()}
+        </p>
+
+    </caption>
+    <thead>
+    <tr>
+
+        <td>index</td>
+        <td>Parameter Name</td>
+        <td>Parameter Type</td>
+        <td>Comments</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr jid="for" data="@{v.method.getParameters()}" var="p"
+        if="@{p.type.getName()!='com.mapkc.nsfw.model.RenderContext'}">
+        <td>
+
+            @{rc.varInc("idx")}
+        </td>
+
+        <td>
+            @{v.paraNames[idx-1]} <span class="label label-default">@{p.getName()}</span>
+        </td>
+        <td>
+            <a href="/static/javadoc/@{p.type.getName().replaceAll('\\.','/').replaceAll('\\$','\\.')}.html" jid="if"
+               test="@{p.type.getName().startsWith('com.mapkc')}">
+                @{p.type.getName()} <span jid="else">@{p.type.getName()}</span> </a>
+        </td>
+        <td>
+            @{p.?getAnnotation(com.mapkc.nsfw.handler.Comment).value()}
+
+            @{rc.varAppend("url",v.paraNames[idx-1]+"="+idx+"&")}
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+
+            <a href="@{rc.path}/@{v.getMethodName()}.json?@{url}">http://api.mapkc.com@html{path}/@{v.getMethodName()}.json?@{url}</a>
+
+            <a class="btn btn-primary" href="/admin/methodcall.html?id=@{path}&name=@{v.getMethodName()}">调用</a>
+
+        </td>
+    </tr>
+    </tfoot>
+
+
+</table>

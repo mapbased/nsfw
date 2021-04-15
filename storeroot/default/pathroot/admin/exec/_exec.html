@@ -1,0 +1,17 @@
+<div class="input-group">
+    <textarea class="form-control" placeholder="Cmd"></textarea>
+    <span class="input-group-addon" id="exe">Exe</span>
+</div>
+<pre id="ret"></pre>
+<script>
+    seajs.use("rpc", function (rpc) {
+        $("#exe").on("click", function () {
+            rpc.callpage("exe", [$("textarea").val()], function (v) {
+                $("#ret").text(v)
+            })
+        })
+
+
+    });
+
+</script>

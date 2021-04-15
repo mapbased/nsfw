@@ -1,0 +1,10 @@
+<script jid="code" runat="action">
+	if (rc.localIp) {
+		rc.site.refeshAll();
+		rc.sendResponseText("ok");
+		true;
+	} else {
+		rc.sendResponseText("local ip only:" + rc.getRemoteIP());
+		true;
+	}
+</script>

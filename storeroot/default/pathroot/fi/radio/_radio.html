@@ -1,0 +1,9 @@
+ <div fk-ff-name="@{fk-fm.name}" fk-ff-com="input[name=@{fk-fm.name}]" 
+  fk-ff-data="input[name=@{fk-fm.name}]:checked"   >
+<label jid="for" class="radio-inline" data="@{fk-fm.vl()}"
+	var="fk-em"> 
+   <input type="radio"  
+	name="@{fk-fm.name}" readonly-="@{fk-fm.readonly}"
+	checked-="@{fk-fm.checked(rc)}" value="@{fk-em.value}" /> @{fk-em.screenName}
+</label>
+</div> <span jid="if" test="@{fk-fm.msg}"  class="help-block">@{fk-fm.msg}</span>

@@ -1,0 +1,27 @@
+<div class="form-group @{fk-fm.hasError(rc)?'has-error'}">
+	<label for="" class="col-md-2   control-label">
+		@{fk-fm.screenName} <span jid="if" test="@{fk-fm.required}"
+		style="color: red">*</span>
+	</label>
+	<div class="col-md-10"  >
+		@{fk-fm.render(rc)}
+	 
+			<span  jid="if" test="@{fk-fm.hasError(rc)}"
+			class="help-block ">@{fk-fm.getError(rc)}</span>
+	</div>
+
+</div>
+<div fk-dyn-field="@{fk-fm.name}" jid="if"
+	test="@{fk-fm.hasDynamicFields()}">
+
+
+	<div jid="for" data="@{fk-fm.vl()}" var="vi" fk-dyn-value="@{vi.value}">
+ 
+		<div include="false" jid="for"
+			data="@{rc.sort(vi.src.getChildren('FormFieldModel'))}" var="fk-fm">
+			<div jid="import" recursive="true" page="form-row.shtml"></div>
+		</div>
+	</div>
+
+</div>
+

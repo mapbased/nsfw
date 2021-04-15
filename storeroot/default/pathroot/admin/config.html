@@ -1,0 +1,16 @@
+<div>   
+  <div jid="code" >
+  
+    if(rc.p('change')!=null){
+         rc.site.setDevelopeMode(!rc.site.developeMode);
+    }
+  </div>
+  
+  @{rc.site.developeMode?'开发模式':'生产模式'}
+  
+  
+  <form method="POST">
+    <input type="submit" name="change" value="切换" />
+  </form>
+  
+</div>

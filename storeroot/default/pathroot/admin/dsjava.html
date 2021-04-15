@@ -1,0 +1,29 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+<h3>
+    生成（或重新生成所有schema对应的实体类）
+</h3>
+
+<div class="alert alert-danger"><big>⚠</big> 该操作可能导致代码丢失，谨慎执行</div>
+
+
+<button type="button" value="生成">
+    生成
+</button>
+
+<script>
+
+
+    seajs.use("rpc", function (rpc) {
+
+        $("button").on("click", function () {
+
+            rpc.callpage("genJava", [], function () {
+                alert("ok");
+            })
+
+        })
+
+
+    })
+
+</script>

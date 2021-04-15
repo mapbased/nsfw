@@ -1,0 +1,39 @@
+<input type="hidden" name="@{fk-fm.name}" fk-ff-name="@{fk-fm.name}"
+	   fk-ff-data="div[name=@{fk-fm.name}]"/>
+<div style=" border: 1px solid #ccc; min-height: 100px"
+	 name="@{fk-fm.name}a">@{fk-fm.singleParamValue(rc)}
+</div>
+<script>
+	$('input[name=@{fk-fm.name}]').val($('div[name=@{fk-fm.name}a]').html());
+
+	seajs.use("/static/ckeditor_4.4.0/ckeditor.js", function (e) {
+		seajs.use("/static/ckeditor_4.4.0/adapters/jquery.js", function (e) {
+			$('div[name=@{fk-fm.name}a]').attr("contentEditable", "true");
+			CKEDITOR.disableAutoInline = true;
+
+
+			$('div[name=@{fk-fm.name}a]').ckeditor(
+					{
+						filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+						filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?Type=Images',
+						filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?Type=Flash',
+						filebrowserUploadUrl: '/handler/upload?command=QuickUpload&type=Files',
+						filebrowserImageUploadUrl: '/handler/upload?command=QuickUpload&type=Images',
+						filebrowserFlashUploadUrl: '/handler/upload?command=QuickUpload&type=Flash',
+						on: { change: function (event) {
+							var data = event.editor.getData();
+
+							var ee = $('input[name=@{fk-fm.name}]');
+							ee.val(data);
+
+
+						}
+						}
+					}
+			);
+
+		});
+
+	})
+</script>
+ 

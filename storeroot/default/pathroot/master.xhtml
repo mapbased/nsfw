@@ -1,0 +1,103 @@
+<div>
+    <nav class="navbar navbar-default" role="navigation">
+
+        <!-- Brand and toggle getTarget grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="/"><i class="fa fa-balance-scale fa-phone-square "></i> <b>
+                @{g:rc.sc.name}</b>
+                <span class="visible-xs-inline"> @{rc.page.screenName}</span></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse"
+             id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li jid="for" class="@{g:a.isNavSelected(rc)?'active':''}"
+                    data="@{_e.'/'.getPageChildren()}" var="a"  if="@{rc.can(a.privilege)}"><a
+                        href="/@{a.name}">@{a.screenName} </a></li>
+                <!--            <li class="dropdown @{rc.path.startsWith('/app/')?'active'}"><a-->
+                <!--                    href="#" class="dropdown-toggle" data-toggle="dropdown"> <span-->
+                <!--                    class="glyphicon glyphicon-cog"></span> 应用 <b class="caret"></b></a>-->
+                <!--                <ul class="dropdown-menu">-->
+                <!--                    <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"-->
+                <!--                        data="@{_e.'/app'.getPageChildren()}" var="a"><a-->
+                <!--                            href="/app/@{a.name}">@{a.screenName} </a></li>-->
+
+                <!--                </ul>-->
+                <!--            </li>-->
+            </ul>
+            <!--  form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form -->
+
+            <ul jid="if"  test="@{rc.userId}" class="nav navbar-nav navbar-right">
+<!--                <li jid="if" test="@{rc.designMode}"><a-->
+<!--                        href="/admin/edit.html?id=@{rc.path}">Edit</a></li>-->
+<!--                <li jid="if" test="@{rc.designMode}"><a-->
+
+<!--                        onclick="javascript:seajs.use('rpc',function(rpc){-->
+<!--rpc.call('/handler/rpcmisc','reloadSite',[],function(a){alert(a)})                   -->
+<!--}); "-->
+<!--                        href="#">reload</a></li>-->
+
+                <li> <a href="/u">@html{_session.name}</a></li>
+
+                <li class="dropdown @{rc.path.startsWith('/u/')?'active'}">
+                    <ul class="dropdown-menu">
+
+                        <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"
+                            data="@{_e.'/u'.getPageChildren()}" var="a"><a
+                                href="/u/@{a.name}">@{a.screenName} </a></li>
+                        <li class="divider"></li>
+                        <li><a href="/login/logout"> <span
+                                class="glyphicon glyphicon-off"></span> 退出
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul jid="if" test="@{rc.userId}" r="true"
+                class="nav navbar-nav navbar-right">
+<!--                <li jid="if" test="@{rc.designMode}"><a-->
+<!--                        href="/admin/edit.html?id=@{rc.path}">注册</a></li>-->
+
+                <li class="dropdown @{rc.path.startsWith('/u/')?'active'}"><a
+                        href="#" class="dropdown-toggle" data-toggle="dropdown"> 登录 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+
+                        <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"
+                            data="@{_e.'/u'.getPageChildren()}" var="a"><a
+                                href="/u/@{a.name}">@{a.screenName} </a></li>
+                        <li class="divider"></li>
+                        <li><a href="/login/logout"> <span
+                                class="glyphicon glyphicon-off"></span> 退出
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+
+
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+
+    <style>
+        .nav nav-pills > li > a {
+            padding: 6px
+        }
+    </style>
+    <div class="container">
+
+        <div jid="Insert"></div>
+    </div>
+</div>

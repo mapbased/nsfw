@@ -1,0 +1,20 @@
+<table class="table">
+<tr>
+  <th>名字
+  </th>
+  <th>值
+  </th>
+  </tr>
+  
+  <tr jid="for" data=@{rc.vars()} var=v>
+    <td>
+      @{v.key}
+      </td>
+   
+        <td > 
+          
+   @{rc.v(v.key=='v'?"n":v.key)}       
+    </td>
+    
+  </tr>
+</table>

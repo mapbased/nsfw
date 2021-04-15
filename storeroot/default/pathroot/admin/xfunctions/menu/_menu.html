@@ -1,0 +1,18 @@
+ 
+<ul class="nav nav-pills">
+ <li class="@{rc.path.startsWith('/admin/childlist.html')?'active'}">
+   <a href="/admin/childlist.html?id=@url{rc.param('id','/')}">子类型</a></li>
+  <li class="@{rc.path.startsWith('/admin/edit.html')?'active'}">
+    <a href="/admin/edit.html?id=@url{rc.param('id','/')}">编辑</a></li>
+
+    <li class="@{rc.path.startsWith('/admin/editcode.html')?'active'}">
+        <a href="/admin/editcode.html?id=@url{rc.param('id','/')}">编辑Groovy</a></li>
+
+
+  <li class="@{rc.path==tab?'active'}" jid="for" var="tab" data="@{rc.e(rc.param('id','/')).extTabs()}" >
+    <a href="@{tab}?id=@url{rc.param('id','/')}">@{rc.e(tab).screenName}</a>
+  </li>
+  
+    <div jid="import" noerror="true" page="/admin/xfunctions/@{rc.e(rc.param('id','/')).xTypeName.toLowerCase()}" ></div>
+ </ul>
+ 

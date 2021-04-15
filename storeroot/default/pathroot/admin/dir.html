@@ -1,0 +1,20 @@
+<div>
+
+	<table class="table">
+		<tr>
+			<td><a href="@{rc.parentPath}">...</a></td>
+			<td></td>
+			<td>@{rc.path}</td>
+			<td></td>
+		</tr>
+
+
+		<tr jid="for" var="f" data="@{files}">
+
+
+			<td><a href="@{rc.path}/@url{f.name}">@{f.name}</a></td>
+			<td>@{f.length()}</td>
+			<td> @html.dateformat(yyyy-MM-dd HH:mm:ss){f.lastModified() }</td>
+		</tr>
+	</table>
+</div>

@@ -1,0 +1,14 @@
+<div fk-ff-name="@{fk-fm.name}" fk-ff-com="input[name='@{fk-fm.name}']"
+	 fk-ff-data="input[name='@{fk-fm.name}']:checked">
+
+	<label jid="for" data="@{fk-fm.vl()}" var="fk-em" 
+           class="checkbox@{fk-fm.attr('inline')=='true'?'-inline'}">
+		<input type="checkbox" name="@{fk-fm.name}"
+			   readonly-="@{fk-fm.readonly}" checked-="@{fk-fm.checked(rc)}"
+			   value="@{fk-em.value}"/>@{fk-em.screenName}
+	</label>
+
+	<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>
+</div>
+  
+

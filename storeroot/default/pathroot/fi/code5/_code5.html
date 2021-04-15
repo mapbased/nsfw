@@ -1,0 +1,96 @@
+<textarea name="@{fk-fm.name}" fk-ff-name="@{fk-fm.name}" fk-type="code" placeholder="@{fk-fm.attr('placeholder')}"
+		  fk-ff-com="textarea[name=@{fk-fm.name}]">@html{fk-fm.singleParamValue(rc)}</textarea>
+
+
+<script id="code">
+	//此处不得已使用了全局变量
+	var fk_g_txa@{fk-fm.name}=$("textarea[name='@{fk-fm.name}']");
+	var CodeMirrorVersion = "/static/CodeMirror-5.1.0"
+	seajs.use([
+
+				  CodeMirrorVersion + "/lib/codemirror.css"
+		,   CodeMirrorVersion + "/addon/hint/show-hint.css"
+        ,   CodeMirrorVersion + "/addon/display/fullscreen.css"
+
+		,   CodeMirrorVersion + "/lib/codemirror.js"], function () {
+
+
+		seajs.use(["rpc", CodeMirrorVersion + "/addon/hint/show-hint.js"
+            ,   CodeMirrorVersion + "/addon/hint/xml-hint.js"
+            ,   CodeMirrorVersion + "/addon/hint/javascript-hint.js"
+            ,  "hint/binding-hint.js"
+
+
+            ,   CodeMirrorVersion + "/addon/hint/html-hint.js"
+            ,   CodeMirrorVersion + "/addon/edit/closebrackets.js"
+            ,   CodeMirrorVersion + "/addon/edit/closetag.js"
+            ,   CodeMirrorVersion + "/addon/display/fullscreen.js"
+            ,   CodeMirrorVersion + "/addon/display/placeholder.js"
+  			,   CodeMirrorVersion + "/mode/xml/xml.js"
+			,   CodeMirrorVersion + "/mode/javascript/javascript.js"
+			,   CodeMirrorVersion + "/mode/css/css.js"
+			,   CodeMirrorVersion + "/mode/htmlmixed/htmlmixed.js"
+
+		], function (rpc) {
+
+          $(document).ready(function(){
+			 var txta = fk_g_txa@{fk-fm.name}[0];
+            if(!txta){
+                 return;
+            }
+
+
+
+              txta.cm = CodeMirror.fromTextArea(txta, {
+
+				lineNumbers: true,
+                autoCloseBrackets: true,
+                autoCloseTags: true,
+                extraKeys: {"Cmd-/": "autocomplete",
+
+                    "Cmd-.":function(cm){
+                        var cur = cm.getCursor(), token = cm.getTokenAt(cur);
+                        if (token.end > cur.ch) {
+                            token.end = cur.ch;
+                            token.string = token.string.slice(0, cur.ch - token.start);
+                        }
+                       // alert(token.string);
+
+
+
+                    },
+
+
+                    "Cmd-B": function(cm) {
+                         cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                     },
+                    "Esc": function(cm) {
+                        if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                    }},
+                value: document.documentElement.innerHTML,
+                mode: {name: "javascript", globalVars: true},
+
+
+				mode: "text/html"
+			});
+			txta.getValue = function () {
+				return this.cm.getValue()
+			}
+            });
+		});
+	});
+</script>
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>
+
+<style>
+	.CodeMirror {
+		border: 1px solid #eee;
+		height: auto;
+	}
+
+
+	.CodeMirror-scroll {
+		overflow-y: hidden;
+		overflow-x: auto;
+	}
+</style>

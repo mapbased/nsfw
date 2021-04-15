@@ -1,0 +1,8 @@
+  <textarea rows="@{fk-fm.attr('rows',3)}"  fk-remove="@{fk-fm.exta}"
+	name="@{fk-fm.name}"
+	  fk-ff-name="@{fk-fm.name}"  class="form-control @{fk-fm.attr('class')}  @{fk-fm.attr('autosize')}"
+	fk-ff-data="textarea[name=@{fk-fm.name}]" >@html{fk-fm.singleParamValue(rc)}</textarea>
+
+
+ 
+<span jid="if" test="@{fk-fm.msg}"  class="help-block">@{fk-fm.msg}</span>

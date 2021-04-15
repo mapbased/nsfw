@@ -1,0 +1,72 @@
+<input type="hidden" fk-remove="@{fk-fm.exta}"
+	   placeholder="@{fk-fm.attr('placeholder')}"
+	   readonly-="@{fk-fm.readonly}" name="@{fk-fm.name}"
+	   class="form-control "
+	   value="@html{fk-fm.singleParamValue(rc) }" fk-ff-name="@{fk-fm.name}"
+	   fk-ff-data="input[name='@{fk-fm.name}']"/>
+<span jid="if" test="@{fk-fm.msg}" class="help-block">@{fk-fm.msg}</span>
+<script>
+	var select2ver = "select2-3.5.1";
+	seajs.use(["@{_cfg.static}/" + select2ver + "/select2.css",
+				"@{_cfg.static}/" + select2ver + "/select2-bootstrap.css",
+				"@{_cfg.static}/" + select2ver + "/select2.js"], function () {
+
+		var a = $("input[name=@{fk-fm.name}]");
+
+		// 通过Ajax去服务端取回相似的标签, 然后提供选择
+		a.select2({
+			placeholder: "输入标签",
+			minimumInputLength: 1,
+			tags: true,
+			tokenSeparators: ["|", ',', '，', '。', ';', '；'],  //貌似不管用了??
+			ajax: {
+				url: '@{fk-fm.attr("requestUrl")}',
+				dataType: "json",
+				data: function (term, page) {
+					return {
+						q: term
+					};
+				},
+				results: function (data, page, query) {
+					var results = [];
+					// 用来存贮text值, 判断用户输入的是否在里面
+					var texts = [];
+					$.each(data, function (index, item) {
+						results.push({
+							id: item.name,
+							text: item.name
+						});
+						texts.push(item.name);
+					});
+					// 如果结果中不包含用户输入的字符串, 也将其作为结果显示
+					var queryStr = $.trim(query.term);
+					if ($.inArray(queryStr, texts) == -1) {
+						results.push({id: queryStr, text: queryStr});
+					}
+					return {results: results};
+				}
+			},
+			maximumInputLength: 20,
+			separator: "|",
+			maximumSelectionSize: "@{fk-fm.attr('maxSelectionSize','5')}"
+		});
+
+
+		// 重新渲染
+		var tagValues = a.val();
+		if (tagValues != '' && tagValues.length > 0) {
+			var tagArray = tagValues.split('|');
+			var datas = [];
+			if (tagArray != null && tagArray.length != 0) {
+				for (var i = 0; i < tagArray.length; i++) {
+					datas.push({
+						id: tagArray[i],
+						text: tagArray[i]
+					});
+				}
+			}
+			a.select2("data", datas);
+		}
+
+	})
+</script>

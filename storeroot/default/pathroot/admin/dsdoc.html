@@ -1,0 +1,61 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+
+<h2>@{_evp.id.screenName}（@{_evp.id.name}）</h2>
+
+<div jid="for" data="@{_evp.id.getChildren('Schema')}" var="sc">
+
+    <table class="table table-bordered">
+
+        <caption><h3>@{sc.screenName} (@{sc.name})</h3>
+            @html{sc.comment}
+        </caption>
+        <tr>
+            <th>
+                字段名称
+            </th>
+            <th>
+                类型
+            </th>
+            <th>
+                中文名称
+            </th>
+            <th>
+                取值列表
+            </th>
+            <th>关联关系</th>
+            <th>详细说明</th>
+
+
+        </tr>
+        <tr jid="for" data="@{sc.getChildren('SchemaField')}" var="sf">
+            <td>
+                @{sf.name}
+            </td>
+
+
+            <td>
+                @{sf.type}
+            </td>
+            <td title="@html{sf.screenName}">
+                @html.max(10){sf.screenName}
+            </td>
+            <td title="@html{sf.valueList}">
+                <a href="/admin/valuelist?vl=@url{sf.valueList}"> @html.max(10){sf.valueList}</a>
+            </td>
+            <td>
+                <span jid="if" test="@{sf.joinSchema}">
+                    @{sf.joinSchema.value.id}/@{sf.joinField}
+
+                </span>
+
+
+            </td>
+            <td>@{sf.comment}</td>
+
+
+        </tr>
+
+    </table>
+
+
+</div>

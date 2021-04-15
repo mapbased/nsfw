@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="/static/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/bootstrap-3.3.4/css/bootstrap-theme.css" rel="stylesheet"/>
+
+
+    <!--[if lt IE 9]>
+    <script src="/static/js/html5shiv.js"></script>
+    <script src="/static/js/respond.min.js"></script>
+    <script src="/static/js/json2.js"></script>
+    <![endif]-->
+
+
+    <script src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/bootstrap-3.3.4/js/bootstrap.js"></script>
+    <script src="/static/js/vue.js"></script>
+    <script id="seajsnode" src="/static/js/sea.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+    <link jid="head"/>
+</head>
+<body style="height: 100%  overflow-x:hidden;overflow-y:hidden">
+<iframe id="pageFrame" frameBorder="0" style=" width: 100%;z-index: 0 ;height:100%;margin: 0px"
+        src="@{_p.page}"></iframe>
+
+<div id="main" style="position: absolute;left: 10px;top: 100px">
+
+    <div class="btn-group-vertical">
+
+
+        <button id="btn-edit" class="btn btn-default  btn-lg">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <button class="btn btn-primary  btn-lg" style="display: none">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <button class="btn btn-primary  btn-lg" style="display: none">
+            <span class="glyphicon glyphicon-th-list"></span>
+        </button>
+
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div id="templates" class="hidden">
+    <div class="fk-track">
+        <div class="fk-focus-box">
+            <button></button>
+        </div>
+        <div class="fk-edit-box"></div>
+        <div class="fk-focus b"></div>
+        <div class="fk-focus t"></div>
+        <div class="fk-focus l"></div>
+        <div class="fk-focus r"></div>
+        <div class="fk-edit b"></div>
+        <div class="fk-edit t"></div>
+        <div class="fk-edit l"></div>
+        <div class="fk-edit r"></div>
+    </div>
+
+</div>
+
+</body>
+<script>
+    seajs.use("designer", function (d) {
+        d.init();
+
+    });
+
+</script>
+
+</html>

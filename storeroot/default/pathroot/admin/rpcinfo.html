@@ -1,0 +1,8 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+<div jid="for" data="@{rc.mvel(com.mapkc.nsfw.handler.BaseRPCActionHandler.getMethods(rc,rc.param('id'))).values() }"
+     var="v">
+
+  <div jid="import" path="@{_p.id}" page="/ui/admin/rpcinfo.shtml"></div>
+
+
+</div>

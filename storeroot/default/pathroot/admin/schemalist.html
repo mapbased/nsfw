@@ -1,0 +1,53 @@
+<div jid="import" page="/admin/xfunctions/menu"></div>
+<script jid="code" runat="Action">
+    rc.setVar("x", rc.site.getXEnum(rc.param("id", '/ds/wenda/topic')));
+</script>
+
+<h1> @{x.id}的页面</h1>
+
+
+<pre>
+
+    @html{'<'}table class="table table-bordered table-hover"  jid="query" <br/>
+       schema="@{x.id}" id="@{x.name}" pagesize="20"><br/>
+
+    @html{'<'}thead><br/>
+
+
+    @html{'<'}tr><br/>
+
+        <div jid="for" data="@{x.getChildren('SchemaField')}" var="sf">
+
+            @html{'<'}th> @html{sf.screenName}
+            @html{'<'}/th>
+
+        </div>
+
+    @html{'<'}/tr><br/>
+    @html{'<'}/thead><br/>
+
+@html{'<'}tbody><br/>
+
+
+    @html{'<'}tr jid="for" data="\@{@{x.name}}"><br/>
+
+        <div jid="for" data="@{x.getChildren('SchemaField')}" var="sf">
+
+            @html{'<'}td>\@{_qr.@html{x.name}.get('@{sf.name}')}
+            @html{'<'}/td>
+
+        </div>
+
+    @html{'<'}/tr><br/>
+    @html{'<'}/tbody><br/>
+
+
+ @html{'<'}/table><br/>
+
+    @html{'<'}div jid="if" test="\@{@{x.name}.pages}">
+    <br/>
+
+     @html{'<'}a jid="import" href="/ui/query/page.shtml" qr="\@{@{x.name}}"><br/>
+    @html{'<'}/a><br/>
+    @html{'<'}/div><br/>
+</pre>

@@ -1,0 +1,147 @@
+<input type="file" />
+<p class="help-block">@{fk-fm.msg}</p>
+
+
+<div class="row photoes">
+	<div class="col-xs-6 col-md-3 fkimgbox" jid="for" data="@{rc.params(rc.v('fk-fm').name)}" var="img">
+
+		<a href="" class="thumbnail">
+			<img src="/img?v=@{img}">
+
+		</a>
+
+		<div class="btn btn-default btn-block btn-xs rm-btn"> 移除 <input type="hidden" value="@{img}"
+																		name="@{fk-fm.name}"/>
+		</div>
+
+
+	</div>
+
+
+	<div class="col-xs-6 col-md-3 fkimgbox fkimgboxtmp hidden">
+
+		<a href="" class="thumbnail">
+			<img src="">
+
+		</a>
+
+		<div class="progress xs ">
+
+
+			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45"
+				 aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+
+			</div>
+		</div>
+		<div class="btn btn-default btn-block btn-xs rm-btn"> 移除 <input type="hidden"/>
+		</div>
+
+
+	</div>
+
+</div>
+<script>
+
+	$("div.photoes").on("click", "div.rm-btn", function (e) {
+
+		$(this).parent(".fkimgbox").remove();
+	});
+
+	$("input[type=file]").on("change", function (event) {
+		var files = event.target.files;
+
+		// Iterate through files
+		for (var i = 0; i < files.length; i++) {
+
+			// Ensure it's an image
+			if (files[i].type.match(/image.*/)) {
+
+				// Load image
+				var reader = new FileReader();
+				reader.onload = function (readerEvent) {
+					var imgbox = $(".fkimgboxtmp").first().clone();
+					$(".photoes").append(imgbox);
+					imgbox.removeClass("hidden");
+					var image = new Image();
+					image.onload = function (imageEvent) {
+						// Resize image
+						var canvas = document.createElement('canvas'),
+								max_size = 1024,
+								width = image.width,
+								height = image.height;
+						if (width > height) {
+							if (width > max_size) {
+								height *= max_size / width;
+								width = max_size;
+							}
+						}
+						/*else {
+						 if (height > max_size) {
+						 width *= max_size / height;
+						 height = max_size;
+						 }
+						 }*/
+						canvas.width = width;
+						canvas.height = height;
+						canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+
+						// Upload image
+						var xhr = new XMLHttpRequest();
+						xhr.imgbox = imgbox;
+						if (xhr.upload) {
+
+							// Update progress
+							xhr.upload.addEventListener('progress', function (event) {
+								var percent = parseInt(event.loaded / event.total * 100);
+								$(".progress-bar", xhr.imgbox).css("width", percent + '%');
+								//progressElement.style.width = percent + '%';
+							}, false);
+
+							// File uploaded / failed
+							xhr.onreadystatechange = function (event) {
+								if (xhr.readyState == 4) {
+									if (xhr.status == 200) {
+
+										$("img", this.imgbox).attr("src", "/img?v=" + xhr.responseText);
+										$(".progress", this.imgbox).replaceWith('');
+										$("input", this.imgbox).attr("value", xhr.responseText);
+										$("input", this.imgbox).attr("name", "@js{fk-fm.name}");
+
+
+									} else {
+										//imageElement.parentNode.removeChild(imageElement);
+									}
+								}
+							}
+
+							// Start upload
+							xhr.open('post', '/handler/savetofile', true);
+							xhr.send(canvas.toDataURL('image/jpeg'));
+
+						}
+
+					}
+					var srcString = readerEvent.target.result;
+					var isrc;
+					if (srcString.substring(5, 10) != "image") {
+						isrc = srcString.replace(/(.{5})/, "$1image/jpeg;");
+					} else {
+						isrc = srcString;
+					}
+
+					$("img", imgbox).attr("src", isrc);
+					image.src = isrc;
+
+
+				}
+				reader.readAsDataURL(files[i]);
+			}
+
+		}
+
+		// Clear files
+		event.target.value = '';
+	});
+
+
+</script>
