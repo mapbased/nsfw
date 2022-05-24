@@ -22,16 +22,7 @@
                 <li jid="for" class="@{g:a.isNavSelected(rc)?'active':''}"
                     data="@{_e.'/'.getPageChildren()}" var="a"  if="@{rc.can(a.privilege)}"><a
                         href="/@{a.name}">@{a.screenName} </a></li>
-                <!--            <li class="dropdown @{rc.path.startsWith('/app/')?'active'}"><a-->
-                <!--                    href="#" class="dropdown-toggle" data-toggle="dropdown"> <span-->
-                <!--                    class="glyphicon glyphicon-cog"></span> 应用 <b class="caret"></b></a>-->
-                <!--                <ul class="dropdown-menu">-->
-                <!--                    <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"-->
-                <!--                        data="@{_e.'/app'.getPageChildren()}" var="a"><a-->
-                <!--                            href="/app/@{a.name}">@{a.screenName} </a></li>-->
-
-                <!--                </ul>-->
-                <!--            </li>-->
+                <!--
             </ul>
             <!--  form class="navbar-form navbar-left" role="search">
       <div class="form-group">
@@ -55,7 +46,7 @@
                 <li class="dropdown @{rc.path.startsWith('/u/')?'active'}">
                     <ul class="dropdown-menu">
 
-                        <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"
+                        <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active':'' }"
                             data="@{_e.'/u'.getPageChildren()}" var="a"><a
                                 href="/u/@{a.name}">@{a.screenName} </a></li>
                         <li class="divider"></li>
@@ -75,7 +66,7 @@
                         href="#" class="dropdown-toggle" data-toggle="dropdown"> 登录 <b class="caret"></b></a>
                     <ul class="dropdown-menu">
 
-                        <li jid="for" fk-remove="@{a.isNavSelected(rc)?'class=active' }"
+                        <li jid="for" fk-remove="@{g:a.isNavSelected(rc)?'class=active':'' }"
                             data="@{_e.'/u'.getPageChildren()}" var="a"><a
                                 href="/u/@{a.name}">@{a.screenName} </a></li>
                         <li class="divider"></li>

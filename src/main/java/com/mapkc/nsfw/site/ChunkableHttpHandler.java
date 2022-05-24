@@ -76,16 +76,7 @@ public class ChunkableHttpHandler extends SimpleChannelInboundHandler<HttpObject
     }
 
     private void serviceRC(final RenderContext rc) {
-        try {
-            this.siteManager.executor.submit(new Runnable() {
-                @Override
-                public void run() {
-                    runRC(rc);
-                }
-            });
-        } catch (RejectedExecutionException e) {
-            rc.sendError(HttpResponseStatus.SERVICE_UNAVAILABLE, "服务器繁忙，稍后再试");
-        }
+       runRC(rc);
     }
 
     private void runRC(RenderContext rc) {
@@ -145,7 +136,7 @@ public class ChunkableHttpHandler extends SimpleChannelInboundHandler<HttpObject
         if (message instanceof HttpContent) {
             HttpContent content = (HttpContent) message;
             if (this.decoder != null) {
-                this.decoder.offer(content.retain());
+                this.decoder.offer(content.duplicate());
             }
             if (content instanceof LastHttpContent) {
 

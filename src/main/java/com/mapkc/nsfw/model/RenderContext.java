@@ -1478,7 +1478,7 @@ public class RenderContext {
 
     }
 
-    private void cleanup() {
+    protected void cleanup() {
 
         ChunkableHttpHandler.log(this);
 

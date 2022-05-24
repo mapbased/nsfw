@@ -122,8 +122,8 @@ public class RawHttpPostRequestDecoder implements InterfaceHttpPostRequestDecode
     @Override
     public void destroy() {
 
-        this.cleanFiles();
-        //  this.rowdata.release();
+        //   this.cleanFiles();
+          this.rowdata.release();
 
     }
 }

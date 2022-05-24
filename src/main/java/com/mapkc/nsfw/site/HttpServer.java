@@ -88,7 +88,7 @@ public class HttpServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         bootstrap.group(bossGroup, workerGroup);
         bootstrap.channel(NioServerSocketChannel.class);
-        bootstrap.handler(new LoggingHandler(LogLevel.INFO));
+
         bootstrap.childHandler(channelInitializer());
         bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
         bootstrap.childOption(ChannelOption.TCP_NODELAY, true);

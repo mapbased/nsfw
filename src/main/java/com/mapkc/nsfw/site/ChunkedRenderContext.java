@@ -66,4 +66,11 @@ public class ChunkedRenderContext extends RenderContext {
         return postDecoder;
     }
 
+    @Override
+    protected void cleanup() {
+        super.cleanup();
+        if(this.postDecoder!=null){
+            this.postDecoder.destroy();
+        }
+    }
 }
