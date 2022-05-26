@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class RawHttpPostRequestDecoder implements InterfaceHttpPostRequestDecoder {
 
-    MixedAttribute rowdata = new MixedAttribute(FKNames.FK_RAW_STREAM, 1024 * 1024 * 5);
+    MixedAttribute rowdata = new MixedAttribute(FKNames.FK_RAW_STREAM,  1024 * 8);
 
     @Override
     public boolean isMultipart() {
@@ -95,7 +95,7 @@ public class RawHttpPostRequestDecoder implements InterfaceHttpPostRequestDecode
     public InterfaceHttpPostRequestDecoder offer(HttpContent content) {
 
         try {
-            rowdata.addContent(content.content(), content instanceof LastHttpContent);
+            rowdata.addContent(content.content().retain(), content instanceof LastHttpContent);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -122,8 +122,7 @@ public class RawHttpPostRequestDecoder implements InterfaceHttpPostRequestDecode
     @Override
     public void destroy() {
 
-        //   this.cleanFiles();
-          this.rowdata.release();
+        this.rowdata.release();
 
     }
 }

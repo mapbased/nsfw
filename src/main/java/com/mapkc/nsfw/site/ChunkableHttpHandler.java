@@ -76,7 +76,7 @@ public class ChunkableHttpHandler extends SimpleChannelInboundHandler<HttpObject
     }
 
     private void serviceRC(final RenderContext rc) {
-       runRC(rc);
+        runRC(rc);
     }
 
     private void runRC(RenderContext rc) {
@@ -110,7 +110,7 @@ public class ChunkableHttpHandler extends SimpleChannelInboundHandler<HttpObject
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
-        cause.printStackTrace();
+        log.warn(cause.toString());
         ctx.channel().close();
     }
 
@@ -136,7 +136,7 @@ public class ChunkableHttpHandler extends SimpleChannelInboundHandler<HttpObject
         if (message instanceof HttpContent) {
             HttpContent content = (HttpContent) message;
             if (this.decoder != null) {
-                this.decoder.offer(content.duplicate());
+                this.decoder.offer(content);
             }
             if (content instanceof LastHttpContent) {
 
