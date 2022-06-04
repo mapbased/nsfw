@@ -7,7 +7,6 @@ import com.google.common.net.UrlEscapers;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Cleaner;
-import org.jsoup.safety.Whitelist;
 
 import java.io.CharArrayWriter;
 import java.io.IOException;
@@ -699,16 +698,16 @@ public class Strings {
         return result;
     }
 
-    public static final String removeHtmlTag(String s) {
-        Document dirty = Jsoup.parseBodyFragment(s, "");
-        Cleaner cleaner = new Cleaner(Whitelist.none());
-        Document clean = cleaner.clean(dirty);
-        return clean.body().text();
-
-//        String ret = Jsoup.clean(s, Whitelist.none());
-//        // System.out.println(s);
-//        return ret;
-    }
+//    public static final String removeHtmlTag(String s) {
+//        Document dirty = Jsoup.parseBodyFragment(s, "");
+//        Cleaner cleaner = new Cleaner(Cleanenone());
+//        Document clean = cleaner.clean(dirty);
+//        return clean.body().text();
+//
+////        String ret = Jsoup.clean(s, Whitelist.none());
+////        // System.out.println(s);
+////        return ret;
+//    }
 
     public static void main(String[] p) {
 

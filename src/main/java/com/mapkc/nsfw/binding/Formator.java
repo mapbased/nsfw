@@ -1,7 +1,7 @@
 package com.mapkc.nsfw.binding;
 
 import com.mapkc.nsfw.model.RenderContext;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
@@ -83,7 +83,7 @@ class NoHtml extends Formator {
 
         if (o != null) {
             String s = o.toString();
-            s = org.jsoup.Jsoup.clean(s, "", Whitelist.none());
+            s = org.jsoup.Jsoup.clean(s, "", Safelist.none());
             return s;
         }
 
